@@ -1,0 +1,1307 @@
+typing-academy/
+  ├── index.html
+  ├── css/
+  │   └── style.css
+  ├── js/
+  │   └── app.js
+  ├── assets/
+  │   ├── fonts/
+  │   └── images/
+  │       ├── keyboard-ar.svg
+  │       └── logo.png
+  └── lessons/
+      ├── arabic/
+      └── english/
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية الطباعة</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>أكاديمية الطباعة</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">الرئيسية</a></li>
+                    <li><a href="#">الدروس</a></li>
+                    <li><a href="#">اختبار السرعة</a></li>
+                    <li><a href="#">الإحصائيات</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>تعلم الطباعة باللمس بسرعة وإتقان</h2>
+                <p>اكتسب مهارة الطباعة السريعة بدون النظر إلى لوحة المفاتيح</p>
+                <a href="#typing-test" class="btn">ابدأ الآن</a>
+            </div>
+        </section>
+
+        <section id="typing-test" class="typing-area">
+            <div class="container">
+                <div class="test-controls">
+                    <button id="start-btn" class="btn">ابدأ</button>
+                    <div class="timer">00:00</div>
+                    <div class="stats">
+                        <span>السرعة: <span id="wpm">0</span> كلمة/دقيقة</span>
+                        <span>الدقة: <span id="accuracy">0</span>%</span>
+                    </div>
+                </div>
+
+                <div class="text-display" id="text-display"></div>
+                
+                <div class="input-area">
+                    <textarea id="typing-input" disabled></textarea>
+                </div>
+
+                <div class="keyboard-container">
+                    <img src="assets/images/keyboard-ar.svg" alt="لوحة المفاتيح العربية" class="keyboard">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>جميع الحقوق محفوظة &copy; أكاديمية الطباعة 2025</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
+@font-face {
+    font-family: 'Cairo';
+    src: url('../assets/fonts/Cairo-Regular.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Cairo';
+    src: url('../assets/fonts/Cairo-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --text-color: #333;
+    --light-color: #ecf0f1;
+    --correct-color: #2ecc71;
+    --wrong-color: #e74c3c;
+    --neutral-color: #bdc3c7;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: #f7f9fc;
+    direction: rtl;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header Styles */
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 0;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.8rem;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-right: 1.5rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    color: var(--secondary-color);
+}
+
+/* Hero Section */
+.hero {
+    background-color: var(--light-color);
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+/* Typing Area */
+.typing-area {
+    padding: 3rem 0;
+}
+
+.test-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.timer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.stats span {
+    font-size: 1.1rem;
+}
+
+.text-display {
+    background-color: white;
+    border: 1px solid var(--neutral-color);
+    border-radius: 8px;
+    padding: 1em;
+    height: calc(50vh - 5px);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.input-area {
+    margin-bottom: 2rem;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 1rem;
+    border: 1px solid var(--neutral-color);
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.1rem;
+    direction: rtl;
+    resize: none;
+}
+
+.keyboard-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.keyboard {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Typing Text Styling */
+.char {
+    display: inline-block;
+}
+
+.correct {
+    background-color: var(--correct-color);
+    color: white;
+}
+
+.wrong {
+    background-color: var(--wrong-color);
+    color: white;
+}
+
+.current {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    nav ul {
+        margin-top: 1rem;
+    }
+    
+    .test-controls {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .stats {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    // اختيار العناصر المطلوبة
+    const startBtn = document.getElementById('start-btn');
+    const textDisplay = document.getElementById('text-display');
+    const typingInput = document.getElementById('typing-input');
+    const timerElement = document.querySelector('.timer');
+    const wpmElement = document.getElementById('wpm');
+    const accuracyElement = document.getElementById('accuracy');
+    
+    // نصوص للتدريب (ستُستبدَل لاحقًا بجلب الدروس من ملفات خارجية)
+    const arabicTexts = [
+        "الطباعة باللمس هي مهارة تساعدك على الكتابة بسرعة دون النظر إلى لوحة المفاتيح.",
+        "يجب أن تكون أصابعك دائمًا على صف الارتكاز وهو الصف الأوسط من لوحة المفاتيح.",
+        "التدريب المستمر يؤدي إلى تحسين مهاراتك في الطباعة وزيادة سرعتك بشكل تدريجي.",
+        "استرخِ واجلس في وضعية مريحة أثناء التدريب على الطباعة لتجنب إجهاد رسغك ويديك.",
+        "ضع شاشة الحاسوب في مستوى النظر للحفاظ على وضعية صحية أثناء الطباعة."
+    ];
+    
+    let currentText = '';
+    let timer;
+    let startTime;
+    let isTyping = false;
+    let mistakes = 0;
+    let totalChars = 0;
+    
+    // تهيئة النص في عنصر العرض
+    function initText(text) {
+        textDisplay.innerHTML = '';
+        currentText = text;
+        
+        // إنشاء عنصر span لكل حرف
+        for (let i = 0; i < text.length; i++) {
+            const charSpan = document.createElement('span');
+            charSpan.textContent = text[i];
+            charSpan.className = 'char';
+            textDisplay.appendChild(charSpan);
+        }
+        
+        // تحديد الحرف الأول كالحرف الحالي
+        textDisplay.children[0].classList.add('current');
+    }
+    
+    // بدء الاختبار
+    function startTest() {
+        typingInput.value = '';
+        typingInput.disabled = false;
+        typingInput.focus();
+        
+        // اختيار نص عشوائي
+        const randomIndex = Math.floor(Math.random() * arabicTexts.length);
+        initText(arabicTexts[randomIndex]);
+        
+        // إعادة تعيين المتغيرات
+        isTyping = true;
+        mistakes = 0;
+        totalChars = 0;
+        startTime = new Date().getTime();
+        
+        // بدء المؤقت
+        clearInterval(timer);
+        timer = setInterval(updateTimer, 1000);
+        
+        // تغيير زر البدء إلى زر إعادة
+        startBtn.textContent = 'إعادة';
+    }
+    
+    // تحديث المؤقت
+    function updateTimer() {
+        if (!isTyping) return;
+        
+        const currentTime = new Date().getTime();
+        const timeElapsed = Math.floor((currentTime - startTime) / 1000);
+        
+        // تنسيق الوقت (دقائق:ثواني)
+        const minutes = Math.floor(timeElapsed / 60);
+        const seconds = timeElapsed % 60;
+        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        // تحديث السرعة
+        const elapsedMinutes = timeElapsed / 60;
+        if (elapsedMinutes > 0) {
+            // حساب عدد الكلمات (بافتراض أن متوسط طول الكلمة 5 أحرف)
+            const words = totalChars / 5;
+            const wpm = Math.round(words / elapsedMinutes);
+            wpmElement.textContent = wpm;
+        }
+    }
+    
+    // التحقق من الإدخال
+    function checkInput() {
+        const inputText = typingInput.value;
+        const textSpans = textDisplay.querySelectorAll('.char');
+        
+        let correct = true;
+        
+        // إزالة تحديد الحرف الحالي من جميع الأحرف
+        for (let i = 0; i < textSpans.length; i++) {
+            textSpans[i].classList.remove('current');
+        }
+        
+        // مقارنة النص المُدخل بالنص الأصلي
+        for (let i = 0; i < inputText.length; i++) {
+            totalChars = inputText.length;
+            
+            if (i < textSpans.length) {
+                if (inputText[i] === currentText[i]) {
+                    textSpans[i].className = 'char correct';
+                } else {
+                    textSpans[i].className = 'char wrong';
+                    correct = false;
+                    mistakes++;
+                }
+            }
+        }
+        
+        // وضع الحرف التالي كالحرف الحالي
+        if (inputText.length < textSpans.length) {
+            textSpans[inputText.length].classList.add('current');
+        }
+        
+        // حساب الدقة
+        const accuracy = totalChars > 0 ? Math.round(((totalChars - mistakes) / totalChars) * 100) : 0;
+        accuracyElement.textContent = accuracy;
+        
+        // التحقق من اكتمال النص
+        if (inputText.length === currentText.length) {
+            finishTest();
+        }
+    }
+    
+    // إنهاء الاختبار
+    function finishTest() {
+        isTyping = false;
+        clearInterval(timer);
+        typingInput.disabled = true;
+        
+        // عرض رسالة إنجاز أو إضافة إحصائيات إلى قاعدة البيانات هنا
+        alert('أحسنت! لقد أكملت النص. جارٍ حفظ نتيجتك...');
+    }
+    
+    // إضافة مستمعي الأحداث
+    startBtn.addEventListener('click', startTest);
+    
+    typingInput.addEventListener('input', function() {
+        if (!isTyping) return;
+        checkInput();
+    });
+    
+    // بدء التطبيق بتحميل نص افتراضي
+    initText('اضغط على زر البدء للبدء في الاختبار.');
+    typingInput.disabled = true;
+});
+// lessons.js
+const lessons = {
+    arabic: {
+        // درس الصف الأوسط (صف الارتكاز)
+        homeRow: {
+            title: "الصف الأوسط (صف الارتكاز)",
+            desc: "تعلم وضعية الأصابع على الصف الأوسط، وهو الصف الأساسي للطباعة باللمس.",
+            keys: "ك م ن ت ا ل ب ي س ش",
+            exercises: [
+                "كتاب كتاب كتاب كتاب",
+                "سكن سكن سكن سكن",
+                "نام نام نام نام",
+                "تاب تاب تاب تاب",
+                "لا لا لا لا لا",
+                "بات بات بات بات",
+                "سال سال سال سال",
+                "نبات نبات نبات نبات",
+                "سكتنا سكتنا سكتنا",
+                "كلمات كلمات كلمات",
+                "اكتب اكتب اكتب اكتب",
+                "انتبه انتبه انتبه انتبه",
+                "التنبيه التنبيه التنبيه",
+                "السكينة السكينة السكينة",
+                "البستان البستان البستان"
+            ]
+        },
+        // درس الصف العلوي
+        topRow: {
+            title: "الصف العلوي",
+            desc: "تعلم طباعة الأحرف الموجودة في الصف العلوي من لوحة المفاتيح.",
+            keys: "ض ص ث ق ف غ ع ه خ ح ج د",
+            exercises: [
+                "فهد فهد فهد فهد",
+                "قفص قفص قفص قفص",
+                "ضجة ضجة ضجة ضجة",
+                "صخر صخر صخر صخر",
+                "حق حق حق حق حق",
+                "عصف عصف عصف عصف",
+                "خضع خضع خضع خضع",
+                "جدفت جدفت جدفت جدفت",
+                "ثقف ثقف ثقف ثقف",
+                "فقه فقه فقه فقه",
+                "هدف هدف هدف هدف",
+                "فصل فصل فصل فصل",
+                "عقد عقد عقد عقد",
+                "قضت قضت قضت قضت"
+            ]
+        },
+        // درس الصف السفلي
+        bottomRow: {
+            title: "الصف السفلي",
+            desc: "تعلم طباعة الأحرف الموجودة في الصف السفلي من لوحة المفاتيح.",
+            keys: "ئ ء ؤ ر لا ى ة و ز ظ",
+            exercises: [
+                "زار زار زار زار",
+                "وزن وزن وزن وزن",
+                "ظل ظل ظل ظل ظل",
+                "ذرة ذرة ذرة ذرة",
+                "روى روى روى روى",
+                "ظهر ظهر ظهر ظهر",
+                "ورد ورد ورد ورد",
+                "ذكر ذكر ذكر ذكر",
+                "مزار مزار مزار مزار",
+                "متوازن متوازن متوازن",
+                "موزون موزون موزون",
+                "مذكور مذكور مذكور",
+                "مظهر مظهر مظهر مظهر"
+            ]
+        },
+        // التدريب على جميع الأحرف
+        allLetters: {
+            title: "جميع الأحرف",
+            desc: "تدريب شامل على جميع الأحرف العربية.",
+            keys: "جميع الأحرف العربية",
+            exercises: [
+                "ظل الضوء خافتا في القاعة حتى بدأت الصلاة.",
+                "قرر المعلم أن يصغي إلى آراء تلاميذه بكل انتباه.",
+                "صنعت فاطمة كعكة شهية وزينتها بفواكه طازجة.",
+                "ذهب الطلاب في رحلة استكشافية إلى غابات الأمازون.",
+                "صعد الغواص إلى سطح الماء بعد ساعة من الغوص.",
+                "قطف البستاني الثمار الناضجة وحملها إلى السوق.",
+                "ضربت الشمس بأشعتها الذهبية على سطح البحر.",
+                "كان الخط العربي منذ القدم رمزا للجمال والإبداع.",
+                "أضاءت المصابيح الشوارع عندما حل الظلام.",
+                "سافر التاجر إلى بلاد كثيرة وعاد محملا بالهدايا."
+            ]
+        }
+    },
+    // يمكن إضافة دروس للغات أخرى هنا
+};
+document.addEventListener('DOMContentLoaded', function() {
+    // اختيار العناصر المطلوبة
+    const startBtn = document.getElementById('start-btn');
+    const textDisplay = document.getElementById('text-display');
+    const typingInput = document.getElementById('typing-input');
+    const timerElement = document.querySelector('.timer');
+    const wpmElement = document.getElementById('wpm');
+    const accuracyElement = document.getElementById('accuracy');
+    
+    // المتغيرات العامة
+    let currentText = '';
+    let timer;
+    let startTime;
+    let isTyping = false;
+    let mistakes = 0;
+    let totalChars = 0;
+    let currentLesson = null;
+    let currentExerciseIndex = 0;
+    
+    // جلب الدروس
+    // (يفترض أن ملف lessons.js تم استدعاؤه قبل هذا الملف)
+    const currentLessons = lessons.arabic;
+    
+    // إنشاء قائمة الدروس في واجهة المستخدم
+    function createLessonsList() {
+        const lessonSection = document.createElement('section');
+        lessonSection.className = 'lessons-section';
+        lessonSection.innerHTML = `
+            <div class="container">
+                <h2>الدروس المتاحة</h2>
+                <div class="lessons-grid" id="lessons-grid"></div>
+            </div>
+        `;
+        
+        document.querySelector('.typing-area').before(lessonSection);
+        
+        const lessonsGrid = document.getElementById('lessons-grid');
+        
+        // إضافة بطاقات الدروس
+        for (const key in currentLessons) {
+            if (currentLessons.hasOwnProperty(key)) {
+                const lesson = currentLessons[key];
+                const lessonCard = document.createElement('div');
+                lessonCard.className = 'lesson-card';
+                lessonCard.innerHTML = `
+                    <h3>${lesson.title}</h3>
+                    <p>${lesson.desc}</p>
+                    <div class="keys-preview">${lesson.keys}</div>
+                    <button class="lesson-btn" data-lesson="${key}">بدء التدريب</button>
+                `;
+                lessonsGrid.appendChild(lessonCard);
+            }
+        }
+        
+        // إضافة مستمعي الأحداث لأزرار الدروس
+        document.querySelectorAll('.lesson-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lessonKey = this.getAttribute('data-lesson');
+                loadLesson(lessonKey);
+                // التمرير إلى قسم التدريب
+                document.getElementById('typing-test').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    }
+    
+    // تحميل درس محدد
+    function loadLesson(lessonKey) {
+        currentLesson = currentLessons[lessonKey];
+        currentExerciseIndex = 0;
+        
+        // عرض معلومات الدرس
+        document.querySelector('.typing-area .container').insertAdjacentHTML('afterbegin', `
+            <div class="lesson-info">
+                <h3>${currentLesson.title}</h3>
+                <p>${currentLesson.desc}</p>
+                <div class="keys-highlight">${currentLesson.keys}</div>
+            </div>
+        `);
+        
+        // تحميل التمرين الأول
+        loadExercise(currentExerciseIndex);
+    }
+    
+    // تحميل تمرين محدد من الدرس الحالي
+    function loadExercise(index) {
+        if (!currentLesson) return;
+        
+        if (index < currentLesson.exercises.length) {
+            const exercise = currentLesson.exercises[index];
+            initText(exercise);
+            startBtn.textContent = 'بدء التدريب';
+        } else {
+            // انتهاء جميع تمارين الدرس
+            textDisplay.innerHTML = '<div class="success-message">تهانينا! لقد أكملت جميع تمارين هذا الدرس.</div>';
+            startBtn.textContent = 'إعادة الدرس';
+            currentExerciseIndex = 0;
+        }
+    }
+    
+    // تهيئة النص في عنصر العرض
+    function initText(text) {
+        textDisplay.innerHTML = '';
+        currentText = text;
+        
+        // إنشاء عنصر span لكل حرف
+        for (let i = 0; i < text.length; i++) {
+            const charSpan = document.createElement('span');
+            charSpan.textContent = text[i];
+            charSpan.className = 'char';
+            textDisplay.appendChild(charSpan);
+        }
+        
+        // تحديد الحرف الأول كالحرف الحالي
+        if (textDisplay.children.length > 0) {
+            textDisplay.children[0].classList.add('current');
+        }
+    }
+    
+    // بدء الاختبار
+    function startTest() {
+        typingInput.value = '';
+        typingInput.disabled = false;
+        typingInput.focus();
+        
+        // إذا كان هناك درس محدد، استخدم التمرين الحالي
+        if (currentLesson) {
+            loadExercise(currentExerciseIndex);
+        } else {
+            // إذا لم يكن هناك درس محدد، استخدم نصًا عشوائيًا (للاختبار العام)
+            const randomIndex = Math.floor(Math.random() * currentLessons.allLetters.exercises.length);
+            initText(currentLessons.allLetters.exercises[randomIndex]);
+        }
+        
+        // إعادة تعيين المتغيرات
+        isTyping = true;
+        mistakes = 0;
+        totalChars = 0;
+        startTime = new Date().getTime();
+        
+        // بدء المؤقت
+        clearInterval(timer);
+        timer = setInterval(updateTimer, 1000);
+        
+        // تغيير زر البدء إلى زر إعادة
+        startBtn.textContent = 'إعادة';
+    }
+    
+    // تحديث المؤقت
+    function updateTimer() {
+        if (!isTyping) return;
+        
+        const currentTime = new Date().getTime();
+        const timeElapsed = Math.floor((currentTime - startTime) / 1000);
+        
+        // تنسيق الوقت (دقائق:ثواني)
+        const minutes = Math.floor(timeElapsed / 60);
+        const seconds = timeElapsed % 60;
+        timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        // تحديث السرعة
+        const elapsedMinutes = timeElapsed / 60;
+        if (elapsedMinutes > 0) {
+            // حساب عدد الكلمات (بافتراض أن متوسط طول الكلمة 5 أحرف)
+            const words = totalChars / 5;
+            const wpm = Math.round(words / elapsedMinutes);
+            wpmElement.textContent = wpm;
+        }
+    }
+    
+    // التحقق من الإدخال
+    function checkInput() {
+        const inputText = typingInput.value;
+        const textSpans = textDisplay.querySelectorAll('.char');
+        
+        let correct = true;
+        
+        // إزالة تحديد الحرف الحالي من جميع الأحرف
+        for (let i = 0; i < textSpans.length; i++) {
+            textSpans[i].classList.remove('current');
+        }
+        
+        // مقارنة النص المُدخل بالنص الأصلي
+        for (let i = 0; i < inputText.length; i++) {
+            totalChars = inputText.length;
+            
+            if (i < textSpans.length) {
+                if (inputText[i] === currentText[i]) {
+                    textSpans[i].className = 'char correct';
+                } else {
+                    textSpans[i].className = 'char wrong';
+                    correct = false;
+                    mistakes++;
+                }
+            }
+        }
+        
+        // وضع الحرف التالي كالحرف الحالي
+        if (inputText.length < textSpans.length) {
+            textSpans[inputText.length].classList.add('current');
+        }
+        
+        // حساب الدقة
+        const accuracy = totalChars > 0 ? Math.round(((totalChars - mistakes) / totalChars) * 100) : 0;
+        accuracyElement.textContent = accuracy;
+        
+        // التحقق من اكتمال النص
+        if (inputText.length === currentText.length) {
+            finishTest();
+        }
+    }
+    
+    // إنهاء الاختبار
+    function finishTest() {
+        isTyping = false;
+        clearInterval(timer);
+        typingInput.disabled = true;
+        
+        // حفظ إحصائيات الاختبار
+        saveStats();
+        
+        // إذا كان هناك درس محدد، انتقل إلى التمرين التالي
+        if (currentLesson) {
+            currentExerciseIndex++;
+            setTimeout(() => {
+                startTest();
+            }, 1500);
+        } else {
+            // عرض زر البدء مرة أخرى
+            startBtn.textContent = 'بدء اختبار جديد';
+        }
+    }
+    
+    // حفظ إحصائيات الاختبار
+    function saveStats() {
+        // يمكن استخدام localStorage لحفظ إحصائيات المستخدم
+        const endTime = new Date().getTime();
+        const timeElapsed = (endTime - startTime) / 1000;
+        const elapsedMinutes = timeElapsed / 60;
+        const wpm = Math.round((totalChars / 5) / elapsedMinutes);
+        const accuracy = totalChars > 0 ? Math.round(((totalChars - mistakes) / totalChars) * 100) : 0;
+        
+        // الحصول على الإحصائيات المحفوظة سابقًا
+        let stats = JSON.parse(localStorage.getItem('typingStats')) || [];
+        
+        // إضافة الإحصائيات الجديدة
+        stats.push({
+            date: new Date().toISOString(),
+            wpm: wpm,
+            accuracy: accuracy,
+            lesson: currentLesson ? currentLesson.title : 'اختبار عام',
+            exercise: currentLesson ? currentExerciseIndex : 0
+        });
+        
+        // حفظ الإحصائيات
+        localStorage.setItem('typingStats', JSON.stringify(stats));
+    }
+    
+    // إنشاء صفحة الإحصائيات
+    function createStatsPage() {
+        const statsBtn = document.createElement('button');
+        statsBtn.className = 'btn stats-btn';
+        statsBtn.textContent = 'عرض الإحصائيات';
+        document.querySelector('.test-controls').appendChild(statsBtn);
+        
+        statsBtn.addEventListener('click', function() {
+            // إنشاء نافذة منبثقة للإحصائيات
+            const statsModal = document.createElement('div');
+            statsModal.className = 'stats-modal';
+            
+            const stats = JSON.parse(localStorage.getItem('typingStats')) || [];
+            
+            let statsHTML = `
+                <div class="stats-content">
+                    <h3>إحصائياتك</h3>
+                    <button class="close-btn">&times;</button>
+                    <div class="stats-summary">
+                        <p>عدد الاختبارات: ${stats.length}</p>
+                        <p>متوسط السرعة: ${calculateAverageWpm(stats)} كلمة/دقيقة</p>
+                        <p>متوسط الدقة: ${calculateAverageAccuracy(stats)}%</p>
+                    </div>
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>الدرس</th>
+                                <th>السرعة</th>
+                                <th>الدقة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            // إضافة الإحصائيات إلى الجدول
+            stats.slice(-10).reverse().forEach(stat => {
+                const date = new Date(stat.date);
+                statsHTML += `
+                    <tr>
+                        <td>${date.toLocaleDateString('ar-SA')}</td>
+                        <td>${stat.lesson}</td>
+                        <td>${stat.wpm} كلمة/دقيقة</td>
+                        <td>${stat.accuracy}%</td>
+                    </tr>
+                `;
+            });
+            
+            statsHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            statsModal.innerHTML = statsHTML;
+            document.body.appendChild(statsModal);
+            
+            // إضافة مستمع حدث لزر الإغلاق
+            document.querySelector('.close-btn').addEventListener('click', function() {
+                document.body.removeChild(statsModal);
+            });
+        });
+    }
+    
+    // حساب متوسط السرعة
+    function calculateAverageWpm(stats) {
+        if (stats.length === 0) return 0;
+        const sum = stats.reduce((total, stat) => total + stat.wpm, 0);
+        return Math.round(sum / stats.length);
+    }
+    
+    // حساب متوسط الدقة
+    function calculateAverageAccuracy(stats) {
+        if (stats.length === 0) return 0;
+        const sum = stats.reduce((total, stat) => total + stat.accuracy, 0);
+        return Math.round(sum / stats.length);
+    }
+    
+    // إضافة مستمعي الأحداث
+    startBtn.addEventListener('click', startTest);
+    
+    typingInput.addEventListener('input', function() {
+        if (!isTyping) return;
+        checkInput();
+    });
+    
+    // تهيئة التطبيق
+    createLessonsList();
+    createStatsPage();
+    
+    // عرض رسالة ترحيبية
+    initText('اختر درسًا للبدء أو اضغط على زر "ابدأ" للبدء في اختبار عام.');
+    typingInput.disabled = true;
+});
+/* أنماط قائمة الدروس */
+.lessons-section {
+    padding: 3rem 0;
+    background-color: #f0f4f8;
+}
+
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.lesson-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.lesson-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.lesson-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.keys-preview {
+    background-color: var(--light-color);
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+    font-family: monospace;
+    font-size: 1.1rem;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.lesson-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-family: 'Cairo', sans-serif;
+    transition: background-color 0.3s;
+}
+
+.lesson-btn:hover {
+    background-color: #2980b9;
+}
+
+/* أنماط معلومات الدرس */
+.lesson-info {
+    background-color: var(--light-color);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.keys-highlight {
+    background-color: white;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    font-family: monospace;
+    font-size: 1.1rem;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+/* أنماط الإحصائيات */
+.stats-btn {
+    background-color: var(--primary-color);
+    margin-right: 1rem;
+}
+
+.stats-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.stats-content {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.stats-summary {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: var(--light-color);
+    border-radius: 8px;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stats-table th, .stats-table td {
+    padding: 0.8rem;
+    text-align: right;
+    border-bottom: 1px solid var(--neutral-color);
+}
+
+.stats-table th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.stats-table tr:nth-child(even) {
+    background-color: rgba(236, 240, 241, 0.5);
+}
+
+/* رسالة النجاح */
+.success-message {
+    color: var(--correct-color);
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(46, 204, 113, 0.1);
+    border-radius: 8px;
+}
+<svg width="800" height="280" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .key {
+            fill: #f1f1f1;
+            stroke: #ccc;
+            stroke-width: 1;
+            rx: 5;
+            ry: 5;
+        }
+        .key:hover {
+            fill: #e0e0e0;
+        }
+        .key-text {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+        .finger-left {
+            fill: #ff9999;
+            opacity: 0.3;
+        }
+        .finger-right {
+            fill: #99ccff;
+            opacity: 0.3;
+        }
+        .home-key {
+            fill: #f5f5f5;
+            stroke: #999;
+            stroke-width: 2;
+        }
+    </style>
+    
+    <!-- صف الأرقام -->
+    <rect class="key" x="10" y="10" width="40" height="40" />
+    <text class="key-text" x="30" y="30">ذ 1</text>
+    
+    <rect class="key" x="60" y="10" width="40" height="40" />
+    <text class="key-text" x="80" y="30">2 ّ</text>
+    
+    <rect class="key" x="110" y="10" width="40" height="40" />
+    <text class="key-text" x="130" y="30">3 َ</text>
+    
+    <rect class="key" x="160" y="10" width="40" height="40" />
+    <text class="key-text" x="180" y="30">4 ً</text>
+    
+    <rect class="key" x="210" y="10" width="40" height="40" />
+    <text class="key-text" x="230" y="30">5 ُ</text>
+    
+    <rect class="key" x="260" y="10" width="40" height="40" />
+    <text class="key-text" x="280" y="30">6 ٌ</text>
+    
+    <rect class="key" x="310" y="10" width="40" height="40" />
+    <text class="key-text" x="330" y="30">7 ﻹ</text>
+    
+    <rect class="key" x="360" y="10" width="40" height="40" />
+    <text class="key-text" x="380" y="30">8 ـ</text>
+    
+    <rect class="key" x="410" y="10" width="40" height="40" />
+    <text class="key-text" x="430" y="30">9 ِ</text>
+    
+    <rect class="key" x="460" y="10" width="40" height="40" />
+    <text class="key-text" x="480" y="30">0 ٍ</text>
+    
+    <rect class="key" x="510" y="10" width="40" height="40" />
+    <text class="key-text" x="530" y="30">- _</text>
+    
+    <rect class="key" x="560" y="10" width="40" height="40" />
+    <text class="key-text" x="580" y="30">= +</text>
+    
+    <rect class="key" x="610" y="10" width="70" height="40" />
+    <text class="key-text" x="645" y="30">Backspace</text>
+    
+    <!-- الصف العلوي -->
+    <rect class="key" x="20" y="60" width="60" height="40" />
+    <text class="key-text" x="50" y="80">Tab</text>
+    
+    <rect class="key finger-right" x="90" y="60" width="40" height="40" />
+    <text class="key-text" x="110" y="80">ض</text>
+    
+    <rect class="key finger-right" x="140" y="60" width="40" height="40" />
+    <text class="key-text" x="160" y="80">ص</text>
+    
+    <rect class="key finger-right" x="190" y="60" width="40" height="40" />
+    <text class="key-text" x="210" y="80">ث</text>
+    
+    <rect class="key finger-right" x="240" y="60" width="40" height="40" />
+    <text class="key-text" x="260" y="80">ق</text>
+    
+    <rect class="key finger-left" x="290" y="60" width="40" height="40" />
+    <text class="key-text" x="310" y="80">ف</text>
+    
+    <rect class="key finger-left" x="340" y="60" width="40" height="40" />
+    <text class="key-text" x="360" y="80">غ</text>
+    
+    <rect class="key finger-left" x="390" y="60" width="40" height="40" />
+    <text class="key-text" x="410" y="80">ع</text>
+    
+    <rect class="key finger-left" x="440" y="60" width="40" height="40" />
+    <text class="key-text" x="460" y="80">ه</text>
+    
+    <rect class="key finger-left" x="490" y="60" width="40" height="40" />
+    <text class="key-text" x="510" y="80">خ</text>
+    
+    <rect class="key finger-left" x="540" y="60" width="40" height="40" />
+    <text class="key-text" x="560" y="80">ح</text>
+    
+    <rect class="key finger-left" x="590" y="60" width="40" height="40" />
+    <text class="key-text" x="610" y="80">ج</text>
+    
+    <rect class="key finger-left" x="640" y="60" width="40" height="40" />
+    <text class="key-text" x="660" y="80">د</text>
+    
+    <!-- الصف الأوسط (صف الارتكاز) -->
+    <rect class="key" x="20" y="110" width="70" height="40" />
+    <text class="key-text" x="55" y="130">Caps Lock</text>
+    
+    <rect class="key finger-right home-key" x="100" y="110" width="40" height="40" />
+    <text class="key-text" x="120" y="130">ش</text>
+    
+    <rect class="key finger-right home-key" x="150" y="110" width="40" height="40" />
+    <text class="key-text" x="170" y="130">س</text>
+    
+    <rect class="key finger-right home-key" x="200" y="110" width="40" height="40" />
+    <text class="key-text" x="220" y="130">ي</text>
+    
+    <rect class="key finger-right home-key" x="250" y="110" width="40" height="40" />
+    <text class="key-text" x="270" y="130">ب</text>
+    
+    <rect class="key finger-left home-key" x="300" y="110" width="40" height="40" />
+    <text class="key-text" x="320" y="130">ل</text>
+    
+    <rect class="key finger-left home-key" x="350" y="110" width="40" height="40" />
+    <text class="key-text" x="370" y="130">ا</text>
+    
+    <rect class="key finger-left home-key" x="400" y="110" width="40" height="40" />
+    <text class="key-text" x="420" y="130">ت</text>
+    
+    <rect class="key finger-left home-key" x="450" y="110" width="40" height="40" />
+    <text class="key-text" x="470" y="130">ن</text>
+    
+    <rect class="key finger-left" x="500" y="110" width="40" height="40" />
+    <text class="key-text" x="520" y="130">م</text>
+    
+    <rect class="key finger-left" x="550" y="110" width="40" height="40" />
+    <text class="key-text" x="570" y="130">ك</text>
+    
+    <rect class="key" x="600" y="110" width="80" height="40" />
+    <text class="key-text" x="640" y="130">Enter</text>
+    
+    <!-- الصف السفلي -->
+    <rect class="key" x="20" y="160" width="90" height="40" />
+    <text class="key-text" x="65" y="180">Shift</text>
+    
+    <rect class="key finger-right" x="120" y="160" width="40" height="40" />
+    <text class="key-text" x="140" y="180">ئ</text>
+    
+    <rect class="key finger-right" x="170" y="160" width="40" height="40" />
+    <text class="key-text" x="190" y="180">ء</text>
+    
+    <rect class="key finger-right" x="220" y="160" width="40" height="40" />
+    <text class="key-text" x="240" y="180">ؤ</text>
+    
+    <rect class="key finger-right" x="270" y="160" width="40" height="40" />
+    <text class="key-text" x="290" y="180">ر</text>
+    
+    <rect class="key finger-left" x="320" y="160" width="40" height="40" />
+    <text class="key-text" x="340" y="180">لا</text>
+    
+    <rect class="key finger-left" x="370" y="160" width="40" height="40" />
+    <text class="key-text" x="390" y="180">ى</text>
+    
+    <rect class="key finger-left" x="420" y="160" width="40" height="40" />
+    <text class="key-text" x="440" y="180">ة</text>
+    
+    <rect class="key finger-left" x="470" y="160" width="40" height="40" />
+    <text class="key-text" x="490" y="180">و</text>
+    
+    <rect class="key finger-left" x="520" y="160" width="40" height="40" />
+    <text class="key-text" x="540" y="180">ز</text>
+    
+    <rect class="key finger-left" x="570" y="160" width="40" height="40" />
+    <text class="key-text" x="590" y="180">ظ</text>
+    
+    <rect class="key" x="620" y="160" width="60" height="40" />
+    <text class="key-text" x="650" y="180">Shift</text>
+    
+    <!-- شريط المسافة -->
+    <rect class="key" x="20" y="210" width="50" height="40" />
+    <text class="key-text" x="45" y="230">Ctrl</text>
+    
+    <rect class="key" x="80" y="210" width="50" height="40" />
+    <text class="key-text" x="105" y="230">Win</text>
+    
+    <rect class="key" x="140" y="210" width="50" height="40" />
+    <text class="key-text" x="165" y="230">Alt</text>
+    
+    <rect class="key" x="200" y="210" width="300" height="40" />
+    <text class="key-text" x="350" y="230">Space</text>
+    
+    <rect class="key" x="510" y="210" width="50" height="40" />
+    <text class="key-text" x="535" y="230">Alt</text>
+    
+    <rect class="key" x="570" y="210" width="50" height="40" />
+    <text class="key-text" x="595" y="230">Fn</text>
+    
+    <rect class="key" x="630" y="210" width="50" height="40" />
+    <text class="key-text" x="655" y="230">Ctrl</text>
+</svg>
+// storage.js
+const Storage = {
+    // حفظ الإحصائيات
+    saveStats: function(stats) {
+        localStorage.setItem('typing_stats', JSON.stringify(stats));
+    },
+    
+    // استرجاع الإحصائيات
+    getStats: function() {
+        return JSON.parse(localStorage.getItem('typing_stats')) || [];
+    },
+    
+    // حفظ تقدم المستخدم
+    saveProgress: function(progress) {
+        localStorage.setItem('typing_progress', JSON.stringify(progress));
+    },
+    
+    // استرجاع تقدم المستخدم
+    getProgress: function() {
+        return JSON.parse(localStorage.getItem('typing_progress')) || {
+            completedLessons: [],
+            lastLesson: null
+        };
+    },
+    
+    // حفظ الإعدادات
+    saveSettings: function(settings) {
+        localStorage.setItem('typing_settings', JSON.stringify(settings));
+    },
+    
+    // استرجاع الإعدادات
+    getSettings: function() {
+        return JSON.parse(localStorage.getItem('typing_settings')) || {
+            language: 'ar',
+            theme: 'light',
+            showKeyboard: true
+        };
+    }
+};
