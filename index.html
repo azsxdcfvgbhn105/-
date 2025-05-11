@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دمج ملفات PDF بالذكاء الاصطناعي - أداة مجانية عبر الإنترنت</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <!-- PDF-LIB for merging PDFs -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <!-- Tesseract.js for OCR -->
+    <script src="https://unpkg.com/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7/download.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/logo.svg" alt="شعار دمج PDF بالذكاء الاصطناعي">
+                    <span>دمج PDF بالذكاء الاصطناعي</span>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">دمج PDF</a></li>
+                    <li><a href="#">تقسيم PDF</a></li>
+                    <li><a href="#">ضغط PDF</a></li>
+                    <li><a href="#">تحويل PDF</a></li>
+                    <li><a href="#">المزيد من الأدوات</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <a href="#" class="btn btn-outline">تسجيل الدخول</a>
+                <a href="#" class="btn btn-primary">التسجيل</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>دمج ملفات PDF بالذكاء الاصطناعي</h1>
+                <p>دمج ملفات PDF ووضعها في أفضل ترتيب باستخدام الذكاء الاصطناعي. أسهل أداة لجمع ملفات PDF على الإنترنت.</p>
+            </div>
+        </section>
+
+        <section class="tool-section">
+            <div class="container">
+                <div class="tool-container" id="upload-container">
+                    <div class="upload-area" id="drop-area">
+                        <i class="fas fa-file-pdf fa-3x"></i>
+                        <h3>اختر ملفات PDF للدمج</h3>
+                        <p>أو اسحب الملفات وأفلتها هنا</p>
+                        <input type="file" id="file-input" accept=".pdf" multiple hidden>
+                        <button class="btn btn-primary btn-lg" id="select-files">
+                            <i class="fas fa-plus-circle"></i> اختيار ملفات
+                        </button>
+                        <div class="upload-options">
+                            <button class="btn btn-outline btn-sm">
+                                <i class="fab fa-google-drive"></i> Google Drive
+                            </button>
+                            <button class="btn btn-outline btn-sm">
+                                <i class="fab fa-dropbox"></i> Dropbox
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-container hidden" id="files-container">
+                    <div class="files-header">
+                        <h2>ملفات PDF المختارة</h2>
+                        <div class="files-actions">
+                            <button class="btn btn-outline btn-sm" id="add-more-files">
+                                <i class="fas fa-plus"></i> إضافة المزيد
+                            </button>
+                            <button class="btn btn-outline btn-sm" id="sort-files">
+                                <i class="fas fa-sort-alpha-down"></i> ترتيب بالاسم
+                            </button>
+                            <button class="btn btn-outline btn-sm" id="toggle-preview">
+                                <i class="fas fa-eye"></i> إظهار/إخفاء المعاينة
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="ai-features">
+                        <div class="ai-feature">
+                            <input type="checkbox" id="ai-sort" checked>
+                            <label for="ai-sort">الترتيب الذكي للمستندات</label>
+                            <div class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">يستخدم الذكاء الاصطناعي لترتيب المستندات بشكل منطقي بناءً على المحتوى</span>
+                            </div>
+                        </div>
+                        <div class="ai-feature">
+                            <input type="checkbox" id="ai-ocr" checked>
+                            <label for="ai-ocr">استخراج النص (OCR)</label>
+                            <div class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">استخراج النص من الصور والمستندات الممسوحة ضوئياً</span>
+                            </div>
+                        </div>
+                        <div class="ai-feature">
+                            <input type="checkbox" id="ai-toc" checked>
+                            <label for="ai-toc">إنشاء جدول محتويات تلقائي</label>
+                            <div class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltip-text">إنشاء جدول محتويات تلقائي بناءً على محتوى المستندات</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="files-list" id="files-list">
+                        <!-- Files will be added here dynamically -->
+                    </div>
+
+                    <div class="process-actions">
+                        <button class="btn btn-primary btn-lg" id="merge-button">
+                            <i class="fas fa-object-group"></i> دمج ملفات PDF
+                        </button>
+                        <button class="btn btn-outline btn-lg" id="clear-button">
+                            <i class="fas fa-trash"></i> مسح الكل
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tool-container hidden" id="processing-container">
+                    <div class="processing-status">
+                        <div class="spinner"></div>
+                        <h3 id="processing-message">جاري معالجة الملفات...</h3>
+                        <div class="progress-bar">
+                            <div class="progress" id="progress-bar"></div>
+                        </div>
+                        <p id="processing-details">يتم تحليل المستندات باستخدام الذكاء الاصطناعي</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container">
+                <h2>مميزات دمج PDF بالذكاء الاصطناعي</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>ترتيب ذكي للمستندات</h3>
+                        <p>يحلل الذكاء الاصطناعي محتوى المستندات ويقترح أفضل ترتيب منطقي للدمج.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>استخراج النص (OCR)</h3>
+                        <p>استخراج النص من الصور والمستندات الممسوحة ضوئياً لتحسين قابلية البحث.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-list"></i>
+                        <h3>جدول محتويات تلقائي</h3>
+                        <p>إنشاء جدول محتويات تلقائي بناءً على العناوين المكتشفة في المستندات.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>خصوصية وأمان</h3>
+                        <p>تتم معالجة جميع الملفات محلياً في متصفحك دون رفعها إلى أي خادم.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-to-section">
+            <div class="container">
+                <h2>كيفية دمج ملفات PDF باستخدام الذكاء الاصطناعي</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>اختر ملفات PDF</h3>
+                        <p>اختر ملفات PDF من جهازك أو اسحبها وأفلتها في منطقة الرفع.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>تنظيم الملفات</h3>
+                        <p>اسحب وأفلت لإعادة ترتيب الملفات أو استخدم ميزة الترتيب الذكي.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>دمج الملفات</h3>
+                        <p>انقر على زر "دمج ملفات PDF" وانتظر حتى تكتمل المعالجة.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>تنزيل الملف المدمج</h3>
+                        <p>سيتم تنزيل ملف PDF المدمج تلقائياً بعد اكتمال المعالجة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>دمج PDF بالذكاء الاصطناعي</h3>
+                    <p>أداة مجانية عبر الإنترنت لدمج ملفات PDF باستخدام تقنيات الذكاء الاصطناعي.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#">دمج PDF</a></li>
+                        <li><a href="#">تقسيم PDF</a></li>
+                        <li><a href="#">ضغط PDF</a></li>
+                        <li><a href="#">تحويل PDF</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>الدعم</h3>
+                    <ul>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>جميع الحقوق محفوظة &copy; 2023 دمج PDF بالذكاء الاصطناعي</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/pdf-ai-merger.js"></script>
+</body>
+</html>
